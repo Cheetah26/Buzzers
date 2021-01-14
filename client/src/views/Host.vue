@@ -1,37 +1,22 @@
 <template>
   <div>
     <div class="d-flex justify-space-around flex-wrap">
-      <control-card startTime="8:00" class="pa-5 ma-5" />
-      <v-card max-width="600" class="pa-5 ma-5" v-for="team in teams" :key="team.name">
-        <v-card-title class="justify-center text-h3">
-          {{ team.name }}
-        </v-card-title>
-
-        <player-card
-          v-for="player in team.players"
-          :key="player.name"
-          :name="player.name"
-          :buzzed="player.buzzed"
-          :captain="player.captain"
-          class="ma-5"
-        >
-        </player-card>
-      </v-card>
+      <control-card time="8:00" class="pa-5 ma-5" />
+      <team-card v-for="team in teams" :key="team.name" :team="team"/>
     </div>
   </div>
 </template>
 
 <script>
-import PlayerCard from '@/components/PlayerCard.vue';
+import TeamCard from '@/components/TeamCard.vue';
 import ControlCard from '@/components/ControlCard.vue';
 
 export default {
   name: 'Home',
   components: {
-    PlayerCard,
+    TeamCard,
     ControlCard,
   },
-
   data() {
     return {
       time: '4:57',

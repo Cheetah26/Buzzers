@@ -56,13 +56,8 @@
 export default {
   name: 'TimeCard',
   props: {
-    startTime: Number,
+    time: String,
     countdown: Boolean,
-  },
-  computed: {
-    time() {
-      return this.startTime;
-    },
   },
   data() {
     return {

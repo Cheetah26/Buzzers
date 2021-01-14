@@ -37,8 +37,9 @@ export default new Vuex.Store({
       state.socket.reconnectError = true;
     },
   },
-  actions: {
+  getters: {
+    getTeams: (state) => state.socket.message.data.players,
   },
-  modules: {
+  actions: {
   },
 });
