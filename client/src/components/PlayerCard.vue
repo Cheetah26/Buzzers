@@ -1,9 +1,10 @@
 <template>
   <v-card :color="bk_color">
     <v-card-text class="text-center text-h5">
-      <div :class="fg_color">
-        <v-icon v-if="captain">mdi-star</v-icon>  {{ name }}
-      </div>
+      <v-icon v-if="captain">mdi-star</v-icon>
+      <span :class="fg_color">
+        {{ name }}
+      </span>
     </v-card-text>
   </v-card>
 </template>
