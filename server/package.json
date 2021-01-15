@@ -4,12 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js",
+    "lint": "node_modules/.bin/eslint --fix **/*.js",
+    "start": "nodemon src/server.js --exec 'npm run lint && node'"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "ws": "^7.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.7"
   }
 }
