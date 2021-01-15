@@ -1,7 +1,7 @@
 <template>
   <v-card min-width="200" wrap class="d-flex flex-column justify-space-around">
     <v-card-title class="justify-center text-h1">
-      {{ time }}
+      {{ displayTime }}
     </v-card-title>
     <v-card-actions class="flex-column justify-space-around">
       <div>
@@ -54,15 +54,17 @@
 
 <script>
 export default {
-  name: 'TimeCard',
-  props: {
-    time: String,
-    countdown: Boolean,
-  },
-  data() {
-    return {
-      setTime: '',
-    };
+  name: 'ControlCard',
+  computed: {
+    time() {
+      return this.$store.getters.getTime;
+    },
+    displayTime() {
+      const mins = Math.floor((this.time % 3600) / 60);
+      const secs = Math.floor(this.time % 60);
+
+      return `${mins}:${secs}${secs < 10 ? '0' : ''}`;
+    },
   },
 };
 </script>

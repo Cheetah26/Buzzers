@@ -10,7 +10,44 @@ export default new Vuex.Store({
       reconnectError: false,
       message: {
         control: {},
-        data: {},
+        data: {
+          time: 500,
+          teams: [
+            {
+              name: 'Team 1',
+              captain: 'Eric',
+              players: [
+                {
+                  name: 'John',
+                  buzzed: false,
+                },
+                {
+                  name: 'Eric',
+                  buzzed: false,
+                  captain: true,
+                },
+                {
+                  name: 'Joby',
+                  buzzed: true,
+                },
+              ],
+            },
+            {
+              name: 'Team 2',
+              players: [
+                {
+                  name: 'Arianna',
+                  buzzed: false,
+                  captain: true,
+                },
+                {
+                  name: 'Jack',
+                  buzzed: false,
+                },
+              ],
+            },
+          ],
+        },
       },
     },
   },
@@ -38,7 +75,8 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    getTeams: (state) => state.socket.message.data.players,
+    getTime: (state) => state.socket.message.data.time,
+    getTeams: (state) => state.socket.message.data.teams,
   },
   actions: {
   },
