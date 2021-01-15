@@ -9,6 +9,14 @@ Vue.config.productionTip = false;
 
 Vue.use(VueNativeSock, 'ws://localhost:9090', { store, format: 'json' });
 
+Vue.mixin({
+  methods: {
+    sendMessage: (control, data) => {
+      Vue.prototype.$socket.send(JSON.stringify({ control, data }));
+    },
+  },
+});
+
 new Vue({
   router,
   store,

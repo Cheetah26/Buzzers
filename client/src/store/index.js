@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import MessageHandler from '@/store/MessageHandler';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -63,9 +65,9 @@ export default new Vuex.Store({
       console.error(state, event);
     },
     // default handler called for all methods
-    // SOCKET_ONMESSAGE(state, message) {
-    // state.socket.message = message;
-    // },
+    SOCKET_ONMESSAGE(state, message) {
+      MessageHandler(state, message);
+    },
     // mutations for reconnect methods
     SOCKET_RECONNECT(state, count) {
       console.info(state, count);
@@ -77,7 +79,5 @@ export default new Vuex.Store({
   getters: {
     getTime: (state) => state.socket.message.data.time,
     getTeams: (state) => state.socket.message.data.teams,
-  },
-  actions: {
   },
 });

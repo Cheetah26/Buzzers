@@ -27,7 +27,7 @@ export default {
       const mins = Math.floor((this.time % 3600) / 60);
       const secs = Math.floor(this.time % 60);
 
-      return `${mins}:${secs}${(secs < 10 ? '0' : '')}`;
+      return `${mins}:${(secs < 10 ? '0' : '')}${secs}`;
     },
   },
 };
