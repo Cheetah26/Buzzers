@@ -1,42 +1,24 @@
-const WebSocket = require('ws');
+const express = require('express');
+const ws = require('ws');
+const wsHandler = require('./wsHandler');
 
-const wss = new WebSocket.Server({ port: 9090 });
-console.log(`Listening on port ${wss.options.port}`);
+const app = express();
 
-function broadcast(control, data) {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({
-        control,
-        data,
-      }));
-    }
+const wsServer = new ws.Server({ noServer: true });
+wsHandler(wsServer);
+
+const server = app.listen(9090);
+
+server.on('upgrade', (request, socket, head) => {
+  wsServer.handleUpgrade(request, socket, head, (client) => {
+    wsServer.emit('connection', client, request);
   });
-}
+});
 
-wss.on('connection', (ws) => {
-  ws.on('message', (recieved) => {
-    const message = JSON.parse(recieved);
-    console.log(message);
-    switch (message.control) {
-      case 'setClock': {
-        broadcast('stopClock', message.data);
-        break;
-      }
-      case 'startClock': {
-        broadcast('startClock', message.data);
-        break;
-      }
-      case 'stopClock': {
-        broadcast('stopClock', message.data);
-        break;
-      }
-      default: {
-        ws.send(JSON.stringify({
-          control: 'error',
-          data: 'Unknown websocket control recieved',
-        }));
-      }
-    }
-  });
+app.get('/', (req, res) => {
+  res.send('Hi');
+});
+
+app.get('/rooms/:id', (req, res) => {
+  res.send(`<h1> you are in room ${req.params.id}`);
 });

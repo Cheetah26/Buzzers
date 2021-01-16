@@ -7,13 +7,13 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/player/:room',
     name: 'Player',
     component: Player,
   },
   {
-    path: '/host',
-    name: 'host',
+    path: '/host/:room',
+    name: 'Host',
     component: Host,
   },
 ];

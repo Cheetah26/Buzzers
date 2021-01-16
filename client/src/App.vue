@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <v-btn text to="/">Player</v-btn>
-      <v-btn text to="/host">Host</v-btn>
+      <v-btn text to="/player/123">Player</v-btn>
+      <v-btn text to="/host/123">Host</v-btn>
     </v-app-bar>
 
     <v-main>

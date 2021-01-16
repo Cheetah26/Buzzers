@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "lint": "node_modules/.bin/eslint --fix **/*.js",
+    "lint": "eslint --fix src/**/*.js",
     "start": "nodemon src/server.js --exec 'npm run lint && node'"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.17.1",
     "ws": "^7.4.2"
   },
   "devDependencies": {
