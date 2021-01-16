@@ -26,8 +26,14 @@ export default {
     displayTime() {
       const mins = Math.floor((this.time % 3600) / 60);
       const secs = Math.floor(this.time % 60);
-
-      return `${mins}:${(secs < 10 ? '0' : '')}${secs}`;
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    },
+  },
+  methods: {
+    // TODO
+    // Add functionality to sendBuzz()
+    sendBuzz() {
+      console.log(this.name);
     },
   },
 };

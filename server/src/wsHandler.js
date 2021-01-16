@@ -1,7 +1,5 @@
 const WebSocket = require('ws');
 
-const rooms = [];
-
 function broadcast(control, data, clients) {
   clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
@@ -13,27 +11,28 @@ function broadcast(control, data, clients) {
   });
 }
 
-module.exports = (wss) => {
+module.exports = (wss, rooms) => {
   wss.on('connection', (client, req) => {
-    console.log(req.url);
-    const existingRoom = rooms.find((room) => room.id === req.url);
+    const roomID = req.url.substring(1, 5);
+    console.log(roomID);
+    const existingRoom = rooms.find((room) => room.id === roomID);
     if (existingRoom) {
+      if (existingRoom.clients.length === 0) {
+        existingRoom.host = client;
+      }
       existingRoom.clients.push(client);
     } else {
-      console.log('creating new room');
-      rooms.push({
-        id: req.url,
-        clients: [
-          client,
-        ],
-      });
+      client.send(JSON.stringify({
+        control: 'error',
+        data: 'Room does not exist',
+      }));
     }
 
     client.on('message', (recieved) => {
       const currentRoom = rooms.find((room) => room.clients.includes(client));
+      console.log(currentRoom);
       const message = JSON.parse(recieved);
       console.log(message);
-      console.log(currentRoom.clients.length);
       switch (message.control) {
         case 'setClock': {
           broadcast('stopClock', message.data, currentRoom.clients);
@@ -54,6 +53,24 @@ module.exports = (wss) => {
           }));
         }
       }
+    });
+
+    /**
+     * TODO
+     * Fix server crashing on client disconnect
+     * -> rooms.findIndex() is not a function
+     */
+
+    client.on('close', () => {
+      const currentRoom = rooms.find((room) => room.clients.includes(client));
+      if (currentRoom.host === client) {
+        const pos = rooms.findIndex(currentRoom);
+        rooms.splice(pos, 1);
+      } else {
+        const pos = rooms.findIndex(client);
+        currentRoom.clients.splice(pos, 1);
+      }
+      console.log(rooms);
     });
   });
 };

@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint --fix"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "vue": "^2.6.11",
     "vue-native-websocket": "^2.0.14",
     "vue-router": "^3.2.0",

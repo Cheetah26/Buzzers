@@ -12,6 +12,10 @@ export default new Vuex.Store({
       reconnectError: false,
       message: {
         control: {},
+        /**
+         * TODO
+         * Add & incorperate 'name' variable
+         */
         data: {
           time: 500,
           teams: [
@@ -64,11 +68,10 @@ export default new Vuex.Store({
     SOCKET_ONERROR(state, event) {
       console.error(state, event);
     },
-    // default handler called for all methods
     SOCKET_ONMESSAGE(state, message) {
+      // Pass all normal messages to the handler
       MessageHandler(state, message);
     },
-    // mutations for reconnect methods
     SOCKET_RECONNECT(state, count) {
       console.info(state, count);
     },
