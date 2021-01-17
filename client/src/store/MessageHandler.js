@@ -1,6 +1,11 @@
 export default (state, message) => {
   const { data } = state.socket.message;
   switch (message.control) {
+    case 'error': {
+      state.socket.error = true;
+      state.socket.errorData = message.data;
+      break;
+    }
     case 'setClock': {
       clearInterval(data.countdown);
       data.time = message.data;

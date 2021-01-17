@@ -10,8 +10,12 @@ export default new Vuex.Store({
     socket: {
       isConnected: false,
       reconnectError: false,
+      error: false,
+      errorData: {
+        type: '',
+        message: '',
+      },
       message: {
-        control: {},
         /**
          * TODO
          * Add & incorperate 'name' variable
@@ -78,9 +82,16 @@ export default new Vuex.Store({
     SOCKET_RECONNECT_ERROR(state) {
       state.socket.reconnectError = true;
     },
+    clearError(state) {
+      state.socket.error = false;
+    },
   },
   getters: {
     getTime: (state) => state.socket.message.data.time,
     getTeams: (state) => state.socket.message.data.teams,
+    getError: (state) => ({
+      error: state.socket.error,
+      data: state.socket.errorData,
+    }),
   },
 });
