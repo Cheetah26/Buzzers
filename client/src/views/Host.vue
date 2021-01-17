@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueNativeSock from 'vue-native-websocket';
 import TeamCard from '@/components/TeamCard.vue';
 import ControlCard from '@/components/ControlCard.vue';
 
@@ -25,9 +23,11 @@ export default {
     },
   },
   created() {
-    const store = this.$store;
     const url = `ws://localhost:9090/${this.$route.params.room}`;
-    Vue.use(VueNativeSock, url, { store, format: 'json' });
+    this.$connect(url);
+  },
+  destroyed() {
+    this.$disconnect();
   },
 };
 </script>
