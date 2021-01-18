@@ -24,6 +24,10 @@ export default {
       return this.$store.getters.getTime;
     },
     displayTime() {
+      /**
+       * TODO
+       * If time is undefined (for some reason), display 0:00
+       */
       const mins = Math.floor((this.time % 3600) / 60);
       const secs = Math.floor(this.time % 60);
       return `${mins}:${secs < 10 ? '0' : ''}${secs}`;

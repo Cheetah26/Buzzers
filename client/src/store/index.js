@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import defaultData from '@/store/defaultData';
 import MessageHandler from '@/store/MessageHandler';
 
 Vue.use(Vuex);
@@ -15,50 +16,7 @@ export default new Vuex.Store({
         type: '',
         message: '',
       },
-      message: {
-        /**
-         * TODO
-         * Add & incorperate 'name' variable
-         */
-        data: {
-          time: 500,
-          teams: [
-            {
-              name: 'Team 1',
-              captain: 'Eric',
-              players: [
-                {
-                  name: 'John',
-                  buzzed: false,
-                },
-                {
-                  name: 'Eric',
-                  buzzed: false,
-                  captain: true,
-                },
-                {
-                  name: 'Joby',
-                  buzzed: true,
-                },
-              ],
-            },
-            {
-              name: 'Team 2',
-              players: [
-                {
-                  name: 'Arianna',
-                  buzzed: false,
-                  captain: true,
-                },
-                {
-                  name: 'Jack',
-                  buzzed: false,
-                },
-              ],
-            },
-          ],
-        },
-      },
+      defaultData,
     },
   },
   mutations: {
@@ -82,13 +40,31 @@ export default new Vuex.Store({
     SOCKET_RECONNECT_ERROR(state) {
       state.socket.reconnectError = true;
     },
+    // Local modifiers
+    clearData(state) {
+      state.socket.message = defaultData;
+    },
     clearError(state) {
       state.socket.error = false;
+    },
+    setTeams(state, teams) {
+      state.socket.message.data.teams = teams;
+    },
+    setData(state, data) {
+      state.socket.message.data = data;
+    },
+    setName(state, name) {
+      state.socket.message.data.name = name;
+    },
+    setTeam(state, team) {
+      state.socket.message.data.team = team;
     },
   },
   getters: {
     getTime: (state) => state.socket.message.data.time,
     getTeams: (state) => state.socket.message.data.teams,
+    getName: (state) => state.socket.message.data.name,
+    getTeam: (state) => state.socket.message.data.team,
     getError: (state) => ({
       error: state.socket.error,
       data: state.socket.errorData,

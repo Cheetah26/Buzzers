@@ -1,5 +1,15 @@
 <template>
   <div>
+    <v-overlay :value="overlay" absolute>
+      <v-card>
+        <v-card-title primary-title> Select team and set name </v-card-title>
+        <v-card-actions>
+          <v-select :items="teamNames" v-model="team" label="Team"></v-select>
+          <v-text-field label="Name" v-model="name"></v-text-field>
+          <v-btn class="green white--text" @click="join">Continue</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-overlay>
     <div class="d-flex justify-space-around flex-wrap">
       <time-card class="pa-5 ma-5" />
       <team-card v-for="team in teams" :key="team.name" :team="team" />
@@ -17,9 +27,27 @@ export default {
     TimeCard,
     TeamCard,
   },
+  data() {
+    return {
+      name: '',
+      team: '',
+      overlay: true,
+    };
+  },
   computed: {
     teams() {
       return this.$store.getters.getTeams;
+    },
+    teamNames() {
+      const teamNames = [];
+      this.teams.forEach((team) => teamNames.push(team.name));
+      return teamNames;
+    },
+  },
+  methods: {
+    join() {
+      this.sendMessage('playerJoin', { name: this.name, team: this.team });
+      this.overlay = false;
     },
   },
   created() {

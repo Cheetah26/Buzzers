@@ -6,6 +6,15 @@ export default (state, message) => {
       state.socket.errorData = message.data;
       break;
     }
+    case 'setTeams': {
+      data.teams = message.data;
+      break;
+    }
+    case 'playerJoin': {
+      const currentTeam = data.teams.find((team) => team.name === message.data.team);
+      currentTeam.players.push({ name: message.data.name });
+      break;
+    }
     case 'setClock': {
       clearInterval(data.countdown);
       data.time = message.data;

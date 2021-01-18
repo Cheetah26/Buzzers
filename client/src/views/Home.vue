@@ -47,6 +47,7 @@ export default {
         url: `http://localhost:9090/join/${this.roomCode}`,
       })
         .then((response) => {
+          this.$store.commit('setTeams', response.data.data.teams);
           this.$router.push(`/player/${response.data.roomID}`);
         })
         .catch((error) => {
@@ -65,6 +66,9 @@ export default {
           console.log(error);
         });
     },
+  },
+  created() {
+    this.$store.commit('clearData');
   },
 };
 </script>
