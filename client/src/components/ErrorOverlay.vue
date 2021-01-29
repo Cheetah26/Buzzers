@@ -29,11 +29,8 @@ export default {
     dismissError() {
       this.$store.commit('clearError');
       switch (this.errorData.type) {
-        case 'badRoom': {
-          this.$router.push('/');
-          break;
-        }
         default:
+          this.$router.push('/');
       }
     },
   },

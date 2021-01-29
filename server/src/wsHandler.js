@@ -43,7 +43,7 @@ module.exports = (wss, rooms) => {
         const message = JSON.parse(recieved);
         console.log(message.control);
         console.log(message.data);
-        console.log(currentRoom.clients.length);
+        // console.log(currentRoom.clients.length);
         switch (message.control) {
           case 'setTeams': {
             message.data.forEach((team) => currentRoom.teams.push({
@@ -58,6 +58,21 @@ module.exports = (wss, rooms) => {
             const currentTeam = currentRoom.teams.find((team) => team.name === message.data.team);
             currentTeam.players.push(playerData);
             broadcast('playerJoin', playerData, currentRoom.clients);
+            break;
+          }
+          case 'leave': {
+            if (currentRoom.host === client) {
+              // Disconnect the clients from the room
+              currentRoom.clients.forEach((c) => {
+                c.sendError('roomClose', 'The host has left, and the room is now closed.');
+                c.close();
+              });
+              // Remove the room data from the server
+              rooms.splice(rooms.indexOf(currentRoom), 1);
+              console.log(rooms.length);
+            } else {
+              broadcast('playerLeave', message.data, currentRoom.clients);
+            }
             break;
           }
           case 'setClock': {
@@ -90,15 +105,22 @@ module.exports = (wss, rooms) => {
      */
 
     // client.on('close', () => {
+    //   console.log(rooms.length);
     //   const currentRoom = rooms.find((room) => room.clients.includes(client));
     //   if (currentRoom.host === client) {
-    //     const pos = rooms.findIndex(currentRoom);
+    //     // Kick all of the clients
+    //     currentRoom.clients.forEach((c) => {
+    //       c.close();
+    //     });
+    //     // Remove the room data from the server
+    //     const pos = rooms.indexOf(currentRoom);
     //     rooms.splice(pos, 1);
     //   } else {
-    //     const pos = rooms.findIndex(client);
+    //     // Remove the player from the room
+    //     const pos = rooms.indexOf(client);
     //     currentRoom.clients.splice(pos, 1);
     //   }
-    //   console.log(rooms);
+    //   console.log(rooms.length);
     // });
   });
 };

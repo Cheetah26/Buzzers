@@ -43,12 +43,14 @@ export default {
       this.teams.forEach((team) => teamNames.push(team.name));
       return teamNames;
     },
+    self() {
+      return { name: this.name, team: this.team };
+    },
   },
   methods: {
     join() {
-      const self = { name: this.name, team: this.team };
-      this.$store.commit('setSelf', self);
-      this.sendMessage('playerJoin', self);
+      this.$store.commit('setSelf', this.self);
+      this.sendMessage('playerJoin', this.self);
       this.overlay = false;
     },
   },
@@ -58,7 +60,7 @@ export default {
   },
   destroyed() {
     // Leave the room & disconnect from WS server
-    this.sendMessage('leave');
+    this.sendMessage('leave', this.self);
     this.$disconnect();
 
     // Reset the local data

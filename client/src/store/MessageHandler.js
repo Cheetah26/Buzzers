@@ -17,6 +17,13 @@ export default (state, message) => {
       currentTeam.players.push({ name: message.data.name });
       break;
     }
+    case 'playerLeave': {
+      const currentTeam = data.teams.find((team) => team.name === message.data.team);
+      const currentPlayer = currentTeam.players.find((player) => player.name === message.data.name);
+      currentTeam.players.splice(currentTeam.players.indexOf(currentPlayer), 1);
+      console.log(`removed player ${message.data.name}`);
+      break;
+    }
     case 'setClock': {
       clearInterval(data.countdown);
       data.countdown = null;
