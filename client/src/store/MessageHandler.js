@@ -19,29 +19,32 @@ export default (state, message) => {
     }
     case 'setClock': {
       clearInterval(data.countdown);
+      data.countdown = null;
       data.time = message.data;
       break;
     }
     case 'startClock': {
-      data.time = message.data;
-      data.countdown = setInterval(() => {
-        if (data.time > 0) {
-          data.time -= 1;
-        } else {
-          clearInterval(data.countdown);
-        }
-      }, 1000);
+      if (!data.countdown) {
+        data.time = message.data;
+        data.countdown = setInterval(() => {
+          if (data.time > 0) {
+            data.time -= 1;
+          } else {
+            clearInterval(data.countdown);
+          }
+        }, 1000);
+      }
       break;
     }
     case 'stopClock': {
       clearInterval(data.countdown);
+      data.countdown = null;
       data.time = message.data;
       break;
     }
     case 'buzz': {
       const currentTeam = data.teams.find((team) => team.name === message.data.team);
       const currentPlayer = currentTeam.players.find((player) => player.name === message.data.name);
-      console.log(currentPlayer);
       Vue.set(currentPlayer, 'buzzed', true);
       break;
     }
