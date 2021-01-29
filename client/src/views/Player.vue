@@ -57,7 +57,12 @@ export default {
     this.$connect(url);
   },
   destroyed() {
+    // Leave the room & disconnect from WS server
+    this.sendMessage('leave');
     this.$disconnect();
+
+    // Reset the local data
+    this.$store.commit('reset');
   },
 };
 </script>

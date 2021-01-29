@@ -1,10 +1,10 @@
-const data = {
+const defaultData = {
   time: undefined,
   self: {
     name: undefined,
     team: undefined,
   },
-  teams: undefined,
+  teams: null,
 };
 
-export default data;
+export default defaultData;

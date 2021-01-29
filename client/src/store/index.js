@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import data from '@/store/defaultData';
+import defaultData from '@/store/defaultData';
 import MessageHandler from '@/store/MessageHandler';
 
 Vue.use(Vuex);
@@ -16,7 +16,7 @@ export default new Vuex.Store({
         type: '',
         message: '',
       },
-      data,
+      data: { ...defaultData },
     },
   },
   mutations: {
@@ -41,8 +41,8 @@ export default new Vuex.Store({
       state.socket.reconnectError = true;
     },
     // Local modifiers
-    clearData(state) {
-      state.socket.data = data;
+    reset(state) {
+      state.socket.data = { ...defaultData };
     },
     clearError(state) {
       state.socket.error = false;

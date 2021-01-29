@@ -67,8 +67,5 @@ export default {
         });
     },
   },
-  created() {
-    this.$store.commit('clearData');
-  },
 };
 </script>
