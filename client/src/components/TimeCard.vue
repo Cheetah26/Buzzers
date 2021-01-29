@@ -20,6 +20,9 @@
 export default {
   name: 'TimeCard',
   computed: {
+    self() {
+      return this.$store.getters.getSelf;
+    },
     time() {
       return this.$store.getters.getTime;
     },
@@ -34,10 +37,8 @@ export default {
     },
   },
   methods: {
-    // TODO
-    // Add functionality to sendBuzz()
     sendBuzz() {
-      console.log(this.name);
+      this.sendMessage('buzz', this.self);
     },
   },
 };

@@ -46,7 +46,9 @@ export default {
   },
   methods: {
     join() {
-      this.sendMessage('playerJoin', { name: this.name, team: this.team });
+      const self = { name: this.name, team: this.team };
+      this.$store.commit('setSelf', self);
+      this.sendMessage('playerJoin', self);
       this.overlay = false;
     },
   },

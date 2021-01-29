@@ -14,7 +14,7 @@
             v-model="team2"
             label="Team Two"
           ></v-text-field>
-          <v-btn class="green white--text" @click="setTeams">Set</v-btn>
+          <v-btn class="green white--text" @click="setTeams()">Set</v-btn>
         </v-card-actions>
       </v-card>
     </v-overlay>

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import defaultData from '@/store/defaultData';
+import data from '@/store/defaultData';
 import MessageHandler from '@/store/MessageHandler';
 
 Vue.use(Vuex);
@@ -16,7 +16,7 @@ export default new Vuex.Store({
         type: '',
         message: '',
       },
-      defaultData,
+      data,
     },
   },
   mutations: {
@@ -42,29 +42,25 @@ export default new Vuex.Store({
     },
     // Local modifiers
     clearData(state) {
-      state.socket.message = defaultData;
+      state.socket.data = data;
     },
     clearError(state) {
       state.socket.error = false;
     },
     setTeams(state, teams) {
-      state.socket.message.data.teams = teams;
+      state.socket.data.teams = teams;
     },
-    setData(state, data) {
-      state.socket.message.data = data;
-    },
-    setName(state, name) {
-      state.socket.message.data.name = name;
-    },
-    setTeam(state, team) {
-      state.socket.message.data.team = team;
+    // setData(state, data) {
+    //   state.socket.message.data = data;
+    // },
+    setSelf(state, self) {
+      state.socket.data.self = self;
     },
   },
   getters: {
-    getTime: (state) => state.socket.message.data.time,
-    getTeams: (state) => state.socket.message.data.teams,
-    getName: (state) => state.socket.message.data.name,
-    getTeam: (state) => state.socket.message.data.team,
+    getTime: (state) => state.socket.data.time,
+    getTeams: (state) => state.socket.data.teams,
+    getSelf: (state) => state.socket.data.self,
     getError: (state) => ({
       error: state.socket.error,
       data: state.socket.errorData,

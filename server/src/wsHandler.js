@@ -50,14 +50,14 @@ module.exports = (wss, rooms) => {
               name: team,
               players: [],
             }));
-            console.log(currentRoom);
             broadcast('setTeams', currentRoom.teams, currentRoom.clients);
             break;
           }
           case 'playerJoin': {
+            const playerData = { name: message.data.name, team: message.data.team, buzzed: false };
             const currentTeam = currentRoom.teams.find((team) => team.name === message.data.team);
-            currentTeam.players.push(message.data.name);
-            broadcast('playerJoin', message.data, currentRoom.clients);
+            currentTeam.players.push(playerData);
+            broadcast('playerJoin', playerData, currentRoom.clients);
             break;
           }
           case 'setClock': {
@@ -70,6 +70,10 @@ module.exports = (wss, rooms) => {
           }
           case 'stopClock': {
             broadcast('stopClock', message.data, currentRoom.clients);
+            break;
+          }
+          case 'buzz': {
+            broadcast('buzz', message.data, currentRoom.clients);
             break;
           }
           default: {

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-card max-width="600" class="pa-5 ma-5" :key="team.name">
+  <div class="d-flex justify-space-around flex-wrap">
+    <v-card max-width="600" class="pa-5 ma-5">
       <v-card-title class="justify-center text-h3">
         {{ team.name }}
       </v-card-title>
@@ -10,9 +10,11 @@
         :key="player.name"
         class="text-center ma-5"
       >
-        <v-card-text :class="playerColors(player)" class="text-h5">
+        <v-card-text
+          :class="player.buzzed ? 'red white--text' : 'white black--text'"
+        >
           <v-icon v-if="player.captain">mdi-star</v-icon>
-          {{ player.name }}
+          <span class="text-h5">{{ player.name }}</span>
         </v-card-text>
       </v-card>
     </v-card>
@@ -24,7 +26,7 @@ export default {
   props: {
     team: Object,
   },
-  methods: {
+  computed: {
     playerColors(player) {
       return player.buzzed ? 'red white--text' : 'white black--text';
     },

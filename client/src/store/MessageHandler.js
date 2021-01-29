@@ -1,5 +1,7 @@
+import Vue from 'vue';
+
 export default (state, message) => {
-  const { data } = state.socket.message;
+  const { data } = state.socket;
   switch (message.control) {
     case 'error': {
       state.socket.error = true;
@@ -34,6 +36,13 @@ export default (state, message) => {
     case 'stopClock': {
       clearInterval(data.countdown);
       data.time = message.data;
+      break;
+    }
+    case 'buzz': {
+      const currentTeam = data.teams.find((team) => team.name === message.data.team);
+      const currentPlayer = currentTeam.players.find((player) => player.name === message.data.name);
+      console.log(currentPlayer);
+      Vue.set(currentPlayer, 'buzzed', true);
       break;
     }
     default: {

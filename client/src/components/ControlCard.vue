@@ -41,7 +41,7 @@
           min-width="100"
           min-height="50"
           color="red white--text"
-          @click="clearBuzz()"
+          @click="clearBuzzers()"
         >
           Clear Buzzers
         </v-btn>
@@ -78,13 +78,11 @@ export default {
     },
     setClock() {
       if (this.newTime != null) {
-        this.$socket.send(
-          JSON.stringify({
-            control: 'setClock',
-            data: this.newTime,
-          }),
-        );
+        this.sendMessage('setClock', this.newTime);
       }
+    },
+    clearBuzzers() {
+      console.log('clearing');
     },
   },
 };
