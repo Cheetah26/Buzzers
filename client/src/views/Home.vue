@@ -42,6 +42,9 @@ export default {
   },
   methods: {
     async joinGame() {
+      // Capitalize the input
+      this.roomCode = this.roomCode.toUpperCase();
+      // Check if the room exists & handle cases
       return axios({
         method: 'get',
         url: `http://localhost:9090/join/${this.roomCode}`,
