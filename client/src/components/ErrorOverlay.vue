@@ -1,5 +1,5 @@
 <template>
-  <v-overlay :value="isError">
+  <v-overlay :value="isError" z-index="100">
     <v-card>
       <v-card-title primary-title>
         <v-icon class="pr-2">mdi-alert-circle</v-icon>
