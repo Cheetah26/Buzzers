@@ -55,6 +55,14 @@ export default (state, message) => {
       Vue.set(currentPlayer, 'buzzed', true);
       break;
     }
+    case 'clearBuzz': {
+      data.teams.forEach((team) => {
+        team.players.forEach((player) => {
+          player.buzzed = false; // eslint-disable-line no-param-reassign
+        });
+      });
+      break;
+    }
     default: {
       console.log(`Unknown control recieved: ${message.control}`);
     }

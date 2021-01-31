@@ -82,7 +82,7 @@ export default {
       }
     },
     clearBuzzers() {
-      console.log('clearing');
+      this.sendMessage('clearBuzz', null);
     },
   },
 };

@@ -54,6 +54,11 @@ module.exports = (wss, rooms) => {
     }
 
     client.on('message', (recieved) => {
+      /**
+       * TODO
+       * Wrap this whole thing in a try-catch to keep the server running
+       * in the event of an unknown error (and hope it's not too broken)
+       */
       const currentRoom = rooms.find((room) => room.clients.includes(client));
       if (!currentRoom) {
         client.sendError('badRoom', `Room ${roomID} does not exist`);
