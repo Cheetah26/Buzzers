@@ -44,15 +44,17 @@ export default new Vuex.Store({
     reset(state) {
       state.socket.data = { ...defaultData };
     },
+    setDataField(state, payload) {
+      // This is probably terrible design, but it beats
+      // writing out a function for every single change
+      Vue.set(state.socket.data, payload.field, payload.data);
+    },
     clearError(state) {
       state.socket.error = false;
     },
     setTeams(state, teams) {
       state.socket.data.teams = teams;
     },
-    // setData(state, data) {
-    //   state.socket.message.data = data;
-    // },
     setSelf(state, self) {
       state.socket.data.self = self;
     },

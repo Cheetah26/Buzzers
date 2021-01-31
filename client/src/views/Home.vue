@@ -50,7 +50,16 @@ export default {
         url: `http://localhost:9090/join/${this.roomCode}`,
       })
         .then((response) => {
-          this.$store.commit('setTeams', response.data.data.teams);
+          this.$store.commit({
+            type: 'setDataField',
+            field: 'time',
+            data: response.data.time,
+          });
+          this.$store.commit({
+            type: 'setDataField',
+            field: 'teams',
+            data: response.data.teams,
+          });
           this.$router.push(`/player/${response.data.roomID}`);
         })
         .catch((error) => {
@@ -64,6 +73,11 @@ export default {
       })
         .then((response) => {
           this.$router.push(`/host/${response.data.roomID}`);
+          this.$store.commit({
+            type: 'setDataField',
+            field: 'time',
+            data: response.data.time,
+          });
         })
         .catch((error) => {
           console.log(error);

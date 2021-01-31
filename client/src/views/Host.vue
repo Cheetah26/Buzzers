@@ -5,6 +5,8 @@
         <v-card-title primary-title>
           Enter team names
         </v-card-title>
+        <!-- TODO -->
+        <!-- Allow a variable number of teams to be defined -->
         <v-card-actions>
           <v-text-field
             v-model="team1"

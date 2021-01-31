@@ -78,7 +78,7 @@ export default {
     },
     setClock() {
       if (this.newTime != null) {
-        this.sendMessage('setClock', this.newTime);
+        this.sendMessage('stopClock', this.newTime);
       }
     },
     clearBuzzers() {

@@ -21,41 +21,49 @@ server.on('upgrade', (request, socket, head) => {
 });
 
 app.get('/create', (req, res) => {
+  // Create the ID for the new room
   const newRoomID = Math.random().toString(36).substring(2, 6).toUpperCase();
+  // Make sure it is not a duplicate
   if (rooms.find((room) => room.id === newRoomID)) {
     res.status(500);
   } else {
+    // Create the room locally
     const newRoom = {
       id: newRoomID,
+      host: undefined,
+      time: 480,
+      countdown: undefined,
       clients: [],
       teams: [],
     };
     rooms.push(newRoom);
+    // Send the info back to the client
     res.send({
       roomID: newRoomID,
-      data: {
-        time: 500,
-        teams: newRoom.teams,
-      },
+      time: newRoom.time,
     });
   }
 });
 
 app.get('/join/:roomCode', (req, res) => {
+  // Find the requested room and make sure it exists
   const currentRoom = rooms.find((room) => room.id === req.params.roomCode);
   if (currentRoom) {
+    // Reply with info for the room
     res.send({
       roomID: currentRoom.id,
-      data: {
-        /**
-         * TODO
-         * Make time match server's state
-         */
-        time: 500,
-        teams: currentRoom.teams,
-      },
+      time: currentRoom.time,
+      teams: currentRoom.teams,
+      /**
+       * TODO
+       * Send if the clock is currently running
+       */
     });
   } else {
+    /**
+     * TODO
+     * Create a proper error response for an invalid room
+     */
     res.status(404);
   }
 });
